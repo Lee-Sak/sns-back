@@ -48,7 +48,13 @@ let PostService = class PostService {
     }
     async read(id) {
         const data = await this.postRepo.joinUserById(id);
-        return data;
+        return {
+            id: data.id,
+            content: data.content,
+            user_id: data.user.id,
+            nickname: data.user.nickname,
+            images: data.images,
+        };
     }
     async create(files, currentUser, body) {
         console.log('files:', files);

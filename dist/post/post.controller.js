@@ -42,6 +42,12 @@ let PostController = class PostController {
         console.log(req.user);
         return await this.postService.create(files, req.user, body);
     }
+    async createCommnet(id, req, comment) {
+        return await this.postService.createComment(id, comment, req.user);
+    }
+    async readCommnet(id, req) {
+        return await this.postService.readCommnet(id, req.user);
+    }
     async update(files, req, body, id, ids) {
         let idsArray;
         if (ids) {
@@ -99,6 +105,24 @@ __decorate([
     __metadata("design:paramtypes", [Array, Object, create_post_dto_1.CreatePostDto]),
     __metadata("design:returntype", Promise)
 ], PostController.prototype, "create", null);
+__decorate([
+    (0, common_1.Post)(':id/comment'),
+    (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Req)()),
+    __param(2, (0, common_1.Body)('comment')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Object, String]),
+    __metadata("design:returntype", Promise)
+], PostController.prototype, "createCommnet", null);
+__decorate([
+    (0, common_1.Get)(':id/comment'),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Object]),
+    __metadata("design:returntype", Promise)
+], PostController.prototype, "readCommnet", null);
 __decorate([
     (0, swagger_1.ApiOperation)({ summary: '게시물 수정하기' }),
     (0, swagger_1.ApiResponse)({

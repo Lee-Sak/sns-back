@@ -16,14 +16,16 @@ exports.postRepo = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
+const comment_entity_1 = require("./entity/comment.entity");
 const hashtag_entity_1 = require("./entity/hashtag.entity");
 const image_entity_1 = require("./entity/image.entity");
 const post_entity_1 = require("./entity/post.entity");
 let postRepo = class postRepo {
-    constructor(post, hashtag, image) {
+    constructor(post, hashtag, image, comment) {
         this.post = post;
         this.hashtag = hashtag;
         this.image = image;
+        this.comment = comment;
     }
     async joinUser() {
         return await this.post.find({
@@ -59,6 +61,32 @@ let postRepo = class postRepo {
             },
         });
     }
+    async readComment(id) {
+        return await this.comment.find({
+            join: {
+                alias: 'comment',
+                leftJoinAndSelect: {
+                    user: 'comment.user',
+                    post: 'comment.post',
+                },
+            },
+            where: {
+                post: {
+                    id,
+                },
+            },
+        });
+    }
+    async joinCommentById(id) {
+        return await this.post.findOne(id, {
+            join: {
+                alias: 'post',
+                leftJoinAndSelect: {
+                    comment: 'post.comments',
+                },
+            },
+        });
+    }
     async joinImgById(id) {
         return await this.post.findOne(id, {
             join: {
@@ -80,6 +108,9 @@ let postRepo = class postRepo {
     }
     async createImage(dto) {
         return await this.image.save(dto);
+    }
+    async createComment(dto) {
+        return await this.comment.save(dto);
     }
     async update(dto) {
         return await this.post.save(dto);
@@ -109,7 +140,9 @@ postRepo = __decorate([
     __param(0, (0, typeorm_1.InjectRepository)(post_entity_1.Post)),
     __param(1, (0, typeorm_1.InjectRepository)(hashtag_entity_1.HashTag)),
     __param(2, (0, typeorm_1.InjectRepository)(image_entity_1.Image)),
+    __param(3, (0, typeorm_1.InjectRepository)(comment_entity_1.Comment)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
+        typeorm_2.Repository,
         typeorm_2.Repository,
         typeorm_2.Repository])
 ], postRepo);

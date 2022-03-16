@@ -9,56 +9,39 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Post = void 0;
+exports.Comment = void 0;
 const user_entity_1 = require("../../user/entity/user.entity");
 const typeorm_1 = require("typeorm");
-const comment_entity_1 = require("./comment.entity");
-const hashtag_entity_1 = require("./hashtag.entity");
-const image_entity_1 = require("./image.entity");
-let Post = class Post {
+const post_entity_1 = require("./post.entity");
+let Comment = class Comment {
 };
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
-], Post.prototype, "id", void 0);
+], Comment.prototype, "id", void 0);
 __decorate([
     (0, typeorm_1.Column)({
         type: 'varchar',
         nullable: false,
         length: 140,
+        default: '',
     }),
     __metadata("design:type", String)
-], Post.prototype, "content", void 0);
+], Comment.prototype, "comment", void 0);
 __decorate([
-    (0, typeorm_1.Column)({
-        type: 'varchar',
-        nullable: false,
-        length: 140,
-    }),
-    __metadata("design:type", String)
-], Post.prototype, "sentence", void 0);
-__decorate([
-    (0, typeorm_1.ManyToOne)(() => user_entity_1.User, (user) => user.posts, {
+    (0, typeorm_1.ManyToOne)(() => user_entity_1.User, (user) => user.comments, {
         onDelete: 'CASCADE',
     }),
     __metadata("design:type", user_entity_1.User)
-], Post.prototype, "user", void 0);
+], Comment.prototype, "user", void 0);
 __decorate([
-    (0, typeorm_1.ManyToMany)(() => hashtag_entity_1.HashTag, (hashtag) => hashtag.posts, {
+    (0, typeorm_1.ManyToOne)(() => post_entity_1.Post, (post) => post.comments, {
         onDelete: 'CASCADE',
     }),
-    __metadata("design:type", Array)
-], Post.prototype, "hashtags", void 0);
-__decorate([
-    (0, typeorm_1.OneToMany)(() => image_entity_1.Image, (image) => image.post),
-    __metadata("design:type", Array)
-], Post.prototype, "images", void 0);
-__decorate([
-    (0, typeorm_1.OneToMany)(() => comment_entity_1.Comment, (comment) => comment.post),
-    __metadata("design:type", Array)
-], Post.prototype, "comments", void 0);
-Post = __decorate([
+    __metadata("design:type", post_entity_1.Post)
+], Comment.prototype, "post", void 0);
+Comment = __decorate([
     (0, typeorm_1.Entity)()
-], Post);
-exports.Post = Post;
-//# sourceMappingURL=post.entity.js.map
+], Comment);
+exports.Comment = Comment;
+//# sourceMappingURL=comment.entity.js.map

@@ -25,8 +25,14 @@ export declare class PostController {
         user_id: number;
         nickname: string;
         images: import("./entity/image.entity").Image[];
+        sentence: string;
     }>;
     create(files: Array<Express.Multer.File>, req: any, body: CreatePostDto): Promise<object & import("./entity/post.entity").Post>;
+    createCommnet(id: string, req: any, comment: string): Promise<object & import("./entity/post.entity").Post>;
+    readCommnet(id: string, req: any): Promise<{
+        comment: string;
+        nick: string;
+    }[]>;
     update(files: Array<Express.Multer.File>, req: any, body: CreatePostDto, id: string, ids: string): Promise<object & import("./entity/post.entity").Post>;
     delete(req: any, id: string): Promise<any>;
 }

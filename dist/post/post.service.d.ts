@@ -30,8 +30,14 @@ export declare class PostService {
         user_id: number;
         nickname: string;
         images: Image[];
+        sentence: string;
     }>;
     create(files: Array<Express.Multer.File>, currentUser: CurrentUser, body: CreatePostDto): Promise<object & Post>;
+    createComment(id: string, comment: string, currentUser: CurrentUser): Promise<object & Post>;
+    readCommnet(id: string, currentUser: CurrentUser): Promise<{
+        comment: string;
+        nick: string;
+    }[]>;
     update(files: Array<Express.Multer.File>, currentUser: CurrentUser, body: CreatePostDto, id: string, ids: number[]): Promise<object & Post>;
     delete(currentUser: CurrentUser, id: string): Promise<any>;
 }

@@ -17,6 +17,7 @@ const image_entity_1 = require("./entity/image.entity");
 const post_entity_1 = require("./entity/post.entity");
 const post_repository_1 = require("./post.repository");
 const fs = require("fs");
+const comment_entity_1 = require("./entity/comment.entity");
 let PostService = class PostService {
     constructor(postRepo, userRepo) {
         this.postRepo = postRepo;
@@ -54,6 +55,7 @@ let PostService = class PostService {
             user_id: data.user.id,
             nickname: data.user.nickname,
             images: data.images,
+            sentence: data.sentence,
         };
     }
     async create(files, currentUser, body) {
@@ -94,6 +96,26 @@ let PostService = class PostService {
         postDto.user = user;
         postDto.hashtags = array_;
         return await this.postRepo.create(postDto);
+    }
+    async createComment(id, comment, currentUser) {
+        const user = await this.userRepo.readById(currentUser.id);
+        const commentObj = new comment_entity_1.Comment();
+        commentObj.comment = comment;
+        commentObj.user = user;
+        const commentCreated = await this.postRepo.createComment(commentObj);
+        const post = await this.postRepo.joinCommentById(id);
+        console.log(post);
+        post.comments = [commentCreated, ...post.comments];
+        return await this.postRepo.create(post);
+    }
+    async readCommnet(id, currentUser) {
+        const a = await this.postRepo.readComment(id);
+        return a.map((e) => {
+            return {
+                comment: e.comment,
+                nick: e.user.nickname,
+            };
+        });
     }
     async update(files, currentUser, body, id, ids) {
         console.log('updat service');

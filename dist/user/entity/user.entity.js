@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var User_1;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
+const comment_entity_1 = require("../../post/entity/comment.entity");
 const post_entity_1 = require("../../post/entity/post.entity");
 const typeorm_1 = require("typeorm");
 let User = User_1 = class User {
@@ -54,6 +55,10 @@ __decorate([
     (0, typeorm_1.OneToMany)(() => post_entity_1.Post, (post) => post.user, {}),
     __metadata("design:type", Array)
 ], User.prototype, "posts", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => comment_entity_1.Comment, (comment) => comment.user, {}),
+    __metadata("design:type", Array)
+], User.prototype, "comments", void 0);
 __decorate([
     (0, typeorm_1.ManyToMany)(() => User_1, { cascade: true }),
     (0, typeorm_1.JoinTable)({

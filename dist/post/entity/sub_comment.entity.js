@@ -9,17 +9,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Comment = void 0;
+exports.SubComment = void 0;
 const user_entity_1 = require("../../user/entity/user.entity");
 const typeorm_1 = require("typeorm");
-const post_entity_1 = require("./post.entity");
-const sub_comment_entity_1 = require("./sub_comment.entity");
-let Comment = class Comment {
+const comment_entity_1 = require("./comment.entity");
+let SubComment = class SubComment {
 };
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
-], Comment.prototype, "id", void 0);
+], SubComment.prototype, "id", void 0);
 __decorate([
     (0, typeorm_1.Column)({
         type: 'varchar',
@@ -28,25 +27,21 @@ __decorate([
         default: '',
     }),
     __metadata("design:type", String)
-], Comment.prototype, "comment", void 0);
+], SubComment.prototype, "sub_comment", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => user_entity_1.User, (user) => user.comments, {
+    (0, typeorm_1.ManyToOne)(() => comment_entity_1.Comment, (comment) => comment.subComment, {
+        onDelete: 'CASCADE',
+    }),
+    __metadata("design:type", comment_entity_1.Comment)
+], SubComment.prototype, "comment", void 0);
+__decorate([
+    (0, typeorm_1.ManyToOne)(() => user_entity_1.User, (user) => user.sub_comments, {
         onDelete: 'CASCADE',
     }),
     __metadata("design:type", user_entity_1.User)
-], Comment.prototype, "user", void 0);
-__decorate([
-    (0, typeorm_1.ManyToOne)(() => post_entity_1.Post, (post) => post.comments, {
-        onDelete: 'CASCADE',
-    }),
-    __metadata("design:type", post_entity_1.Post)
-], Comment.prototype, "post", void 0);
-__decorate([
-    (0, typeorm_1.OneToMany)(() => sub_comment_entity_1.SubComment, (sub) => sub.comment),
-    __metadata("design:type", Array)
-], Comment.prototype, "subComment", void 0);
-Comment = __decorate([
+], SubComment.prototype, "user", void 0);
+SubComment = __decorate([
     (0, typeorm_1.Entity)()
-], Comment);
-exports.Comment = Comment;
-//# sourceMappingURL=comment.entity.js.map
+], SubComment);
+exports.SubComment = SubComment;
+//# sourceMappingURL=sub_comment.entity.js.map

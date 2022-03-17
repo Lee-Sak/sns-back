@@ -18,6 +18,7 @@ const post_entity_1 = require("./entity/post.entity");
 const post_repository_1 = require("./post.repository");
 const fs = require("fs");
 const comment_entity_1 = require("./entity/comment.entity");
+const sub_comment_entity_1 = require("./entity/sub_comment.entity");
 let PostService = class PostService {
     constructor(postRepo, userRepo) {
         this.postRepo = postRepo;
@@ -108,14 +109,32 @@ let PostService = class PostService {
         post.comments = [commentCreated, ...post.comments];
         return await this.postRepo.create(post);
     }
+    async createSubComment(id, sub_comment, currentUser) {
+        const user = await this.userRepo.readById(currentUser.id);
+        const subCommenttObj = new sub_comment_entity_1.SubComment();
+        subCommenttObj.sub_comment = sub_comment;
+        subCommenttObj.user = user;
+        const subCommentCreated = await this.postRepo.createSubComment(subCommenttObj);
+        const comment = await this.postRepo.joinCommentAndSubCommentById(id);
+        console.log(comment);
+        comment.subComment = [subCommentCreated, ...comment.subComment];
+        return await this.postRepo.createComment(comment);
+    }
     async readCommnet(id, currentUser) {
         const a = await this.postRepo.readComment(id);
+        console.log(a);
         return a.map((e) => {
             return {
+                id: e.id,
                 comment: e.comment,
                 nick: e.user.nickname,
+                subComment: e.subComment,
+                user_id: e.user.id,
             };
         });
+    }
+    async readSubCommnet(id, currentUser) {
+        return await this.postRepo.readSubCommnet(id);
     }
     async update(files, currentUser, body, id, ids) {
         console.log('updat service');
@@ -189,7 +208,7 @@ let PostService = class PostService {
         }
     }
     async delete(currentUser, id) {
-        const isExist = await this.postRepo.joinUserById(id);
+        const isExist = await this.postRepo.joinUser2ById(id);
         if (isExist) {
             if (isExist.user.id.toString() === currentUser.id ||
                 currentUser.id === '1') {
@@ -214,6 +233,25 @@ let PostService = class PostService {
             throw new common_1.HttpException('존재하지 않는 게시글 입니다.', 503);
         }
         return null;
+    }
+    async deleteComment(currentUser, id) {
+        const isExist = await this.postRepo.readCommentById(id);
+        if (isExist) {
+            if (isExist.user.id.toString() === currentUser.id ||
+                currentUser.id === '1') {
+                await this.postRepo.deleteCommentById(id);
+            }
+            else {
+                throw new common_1.HttpException('본인의 글만 삭제할 수 있습니다.', 503);
+            }
+        }
+        else {
+            throw new common_1.HttpException('존재하지 않는 게시글 입니다.', 503);
+        }
+        return null;
+    }
+    async deleteSubComment(currentUser, id) {
+        return await this.postRepo.deleteSubComment(id);
     }
 };
 PostService = __decorate([

@@ -20,12 +20,14 @@ const comment_entity_1 = require("./entity/comment.entity");
 const hashtag_entity_1 = require("./entity/hashtag.entity");
 const image_entity_1 = require("./entity/image.entity");
 const post_entity_1 = require("./entity/post.entity");
+const sub_comment_entity_1 = require("./entity/sub_comment.entity");
 let postRepo = class postRepo {
-    constructor(post, hashtag, image, comment) {
+    constructor(post, hashtag, image, comment, subComment) {
         this.post = post;
         this.hashtag = hashtag;
         this.image = image;
         this.comment = comment;
+        this.subComment = subComment;
     }
     async joinUser() {
         return await this.post.find({
@@ -44,6 +46,16 @@ let postRepo = class postRepo {
     async readById(id) {
         return await this.post.findOne(id);
     }
+    async readCommentById(id) {
+        return await this.comment.findOne(id, {
+            join: {
+                alias: 'comment_a',
+                leftJoinAndSelect: {
+                    user: 'comment_a.user',
+                },
+            },
+        });
+    }
     async readByImage(id) {
         return await this.image.findOne(id);
     }
@@ -61,6 +73,16 @@ let postRepo = class postRepo {
             },
         });
     }
+    async joinUser2ById(id) {
+        return await this.post.findOne(id, {
+            join: {
+                alias: 'post',
+                leftJoinAndSelect: {
+                    user: 'post.user',
+                },
+            },
+        });
+    }
     async readComment(id) {
         return await this.comment.find({
             join: {
@@ -68,10 +90,27 @@ let postRepo = class postRepo {
                 leftJoinAndSelect: {
                     user: 'comment.user',
                     post: 'comment.post',
+                    subComment: 'comment.subComment',
                 },
             },
             where: {
                 post: {
+                    id,
+                },
+            },
+        });
+    }
+    async readSubCommnet(id) {
+        return await this.subComment.find({
+            join: {
+                alias: 'subComment',
+                leftJoinAndSelect: {
+                    user: 'subComment.user',
+                    comment: 'subComment.comment',
+                },
+            },
+            where: {
+                comment: {
                     id,
                 },
             },
@@ -83,6 +122,16 @@ let postRepo = class postRepo {
                 alias: 'post',
                 leftJoinAndSelect: {
                     comment: 'post.comments',
+                },
+            },
+        });
+    }
+    async joinCommentAndSubCommentById(id) {
+        return await this.comment.findOne(id, {
+            join: {
+                alias: 'comment_a',
+                leftJoinAndSelect: {
+                    comment: 'comment_a.subComment',
                 },
             },
         });
@@ -112,14 +161,23 @@ let postRepo = class postRepo {
     async createComment(dto) {
         return await this.comment.save(dto);
     }
+    async createSubComment(dto) {
+        return await this.subComment.save(dto);
+    }
     async update(dto) {
         return await this.post.save(dto);
     }
     async deleteById(id) {
         return await this.post.delete(id);
     }
+    async deleteCommentById(id) {
+        return await this.comment.delete(id);
+    }
     async deleteImageById(id) {
         return await this.image.delete(id);
+    }
+    async deleteSubComment(id) {
+        return await this.subComment.delete(id);
     }
     async readImageIsNull() {
         return await this.image
@@ -141,7 +199,9 @@ postRepo = __decorate([
     __param(1, (0, typeorm_1.InjectRepository)(hashtag_entity_1.HashTag)),
     __param(2, (0, typeorm_1.InjectRepository)(image_entity_1.Image)),
     __param(3, (0, typeorm_1.InjectRepository)(comment_entity_1.Comment)),
+    __param(4, (0, typeorm_1.InjectRepository)(sub_comment_entity_1.SubComment)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
+        typeorm_2.Repository,
         typeorm_2.Repository,
         typeorm_2.Repository,
         typeorm_2.Repository])

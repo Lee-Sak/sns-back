@@ -18,11 +18,14 @@ const post_service_1 = require("./post.service");
 const hashtag_entity_1 = require("./entity/hashtag.entity");
 const image_entity_1 = require("./entity/image.entity");
 const comment_entity_1 = require("./entity/comment.entity");
+const sub_comment_entity_1 = require("./entity/sub_comment.entity");
 let PostModule = class PostModule {
 };
 PostModule = __decorate([
     (0, common_1.Module)({
-        imports: [typeorm_1.TypeOrmModule.forFeature([post_entity_1.Post, user_entity_1.User, hashtag_entity_1.HashTag, image_entity_1.Image, comment_entity_1.Comment])],
+        imports: [
+            typeorm_1.TypeOrmModule.forFeature([post_entity_1.Post, user_entity_1.User, hashtag_entity_1.HashTag, image_entity_1.Image, comment_entity_1.Comment, sub_comment_entity_1.SubComment]),
+        ],
         controllers: [post_controller_1.PostController],
         providers: [post_service_1.PostService, post_repository_1.postRepo, user_repository_1.UserRepo],
     })

@@ -1,5 +1,6 @@
 import { Comment } from 'src/post/entity/comment.entity';
 import { Post } from 'src/post/entity/post.entity';
+import { SubComment } from 'src/post/entity/sub_comment.entity';
 export declare class User {
     id: number;
     email: string;
@@ -8,6 +9,7 @@ export declare class User {
     isActive: boolean;
     posts: Post[];
     comments: Comment[];
+    sub_comments: SubComment[];
     users: User[];
     users_1: User[];
 }

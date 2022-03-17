@@ -45,6 +45,12 @@ let PostController = class PostController {
     async createCommnet(id, req, comment) {
         return await this.postService.createComment(id, comment, req.user);
     }
+    async createSubComment(id, req, sub_comment) {
+        return await this.postService.createSubComment(id, sub_comment, req.user);
+    }
+    async readSubCommnet(id, req) {
+        return await this.postService.readSubCommnet(id, req.user);
+    }
     async readCommnet(id, req) {
         return await this.postService.readCommnet(id, req.user);
     }
@@ -57,6 +63,12 @@ let PostController = class PostController {
         }
         console.log(idsArray);
         return await this.postService.update(files, req.user, body, id, idsArray);
+    }
+    async deleteComment(req, id) {
+        return await this.postService.deleteComment(req.user, id);
+    }
+    async deleteSubComment(req, id) {
+        return await this.postService.deleteSubComment(req.user, id);
     }
     async delete(req, id) {
         return await this.postService.delete(req.user, id);
@@ -116,6 +128,24 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], PostController.prototype, "createCommnet", null);
 __decorate([
+    (0, common_1.Post)(':id/subcomment'),
+    (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Req)()),
+    __param(2, (0, common_1.Body)('sub_comment')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Object, String]),
+    __metadata("design:returntype", Promise)
+], PostController.prototype, "createSubComment", null);
+__decorate([
+    (0, common_1.Get)(':id/subcomment'),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Object]),
+    __metadata("design:returntype", Promise)
+], PostController.prototype, "readSubCommnet", null);
+__decorate([
     (0, common_1.Get)(':id/comment'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Req)()),
@@ -143,6 +173,24 @@ __decorate([
     __metadata("design:paramtypes", [Array, Object, create_post_dto_1.CreatePostDto, String, String]),
     __metadata("design:returntype", Promise)
 ], PostController.prototype, "update", null);
+__decorate([
+    (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard),
+    (0, common_1.Delete)('comment/:id'),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, String]),
+    __metadata("design:returntype", Promise)
+], PostController.prototype, "deleteComment", null);
+__decorate([
+    (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard),
+    (0, common_1.Delete)('comment/subcomment/:id'),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, String]),
+    __metadata("design:returntype", Promise)
+], PostController.prototype, "deleteSubComment", null);
 __decorate([
     (0, swagger_1.ApiOperation)({ summary: '게시물 삭제하기' }),
     (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard),

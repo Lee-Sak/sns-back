@@ -29,10 +29,17 @@ export declare class PostController {
     }>;
     create(files: Array<Express.Multer.File>, req: any, body: CreatePostDto): Promise<object & import("./entity/post.entity").Post>;
     createCommnet(id: string, req: any, comment: string): Promise<object & import("./entity/post.entity").Post>;
+    createSubComment(id: string, req: any, sub_comment: string): Promise<object & import("./entity/comment.entity").Comment>;
+    readSubCommnet(id: string, req: any): Promise<import("./entity/sub_comment.entity").SubComment[]>;
     readCommnet(id: string, req: any): Promise<{
+        id: number;
         comment: string;
         nick: string;
+        subComment: import("./entity/sub_comment.entity").SubComment[];
+        user_id: number;
     }[]>;
     update(files: Array<Express.Multer.File>, req: any, body: CreatePostDto, id: string, ids: string): Promise<object & import("./entity/post.entity").Post>;
+    deleteComment(req: any, id: string): Promise<any>;
+    deleteSubComment(req: any, id: string): Promise<import("typeorm").DeleteResult>;
     delete(req: any, id: string): Promise<any>;
 }

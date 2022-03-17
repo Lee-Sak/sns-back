@@ -19,6 +19,7 @@ const post_entity_1 = require("./post/entity/post.entity");
 const hashtag_entity_1 = require("./post/entity/hashtag.entity");
 const image_entity_1 = require("./post/entity/image.entity");
 const comment_entity_1 = require("./post/entity/comment.entity");
+const sub_comment_entity_1 = require("./post/entity/sub_comment.entity");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -32,7 +33,7 @@ AppModule = __decorate([
                 username: process.env.DB_USERNAME,
                 password: process.env.DB_PASSWORD,
                 database: process.env.DB_DATABASE,
-                entities: [user_entity_1.User, post_entity_1.Post, hashtag_entity_1.HashTag, image_entity_1.Image, comment_entity_1.Comment],
+                entities: [user_entity_1.User, post_entity_1.Post, hashtag_entity_1.HashTag, image_entity_1.Image, comment_entity_1.Comment, sub_comment_entity_1.SubComment],
                 synchronize: true,
                 logging: true,
             }),

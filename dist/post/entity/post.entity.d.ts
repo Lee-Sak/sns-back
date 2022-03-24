@@ -6,6 +6,7 @@ export declare class Post {
     id: number;
     content: string;
     sentence: string;
+    like: number;
     user: User;
     hashtags: HashTag[];
     images: Image[];

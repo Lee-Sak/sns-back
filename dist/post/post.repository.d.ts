@@ -36,4 +36,5 @@ export declare class postRepo {
     deleteSubComment(id: string): Promise<import("typeorm").DeleteResult>;
     readImageIsNull(): Promise<any[]>;
     deleteImageIsNull(): Promise<import("typeorm").DeleteResult>;
+    likeUp(id: string): Promise<import("typeorm").UpdateResult>;
 }

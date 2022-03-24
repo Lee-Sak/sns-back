@@ -42,8 +42,8 @@ let UserController = class UserController {
     async follow(id, req) {
         return await this.userService.follow(id, req.user);
     }
-    async readToken(req) {
-        return req.user;
+    async readToken(id) {
+        return await this.userService.refreshToken(id);
     }
     async readFollowing(req) {
         return await this.userService.readFollowing(req.user.id);
@@ -116,11 +116,10 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "follow", null);
 __decorate([
-    (0, common_1.Get)('token'),
-    (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard),
-    __param(0, (0, common_1.Req)()),
+    (0, common_1.Get)('token/:id'),
+    __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "readToken", null);
 __decorate([

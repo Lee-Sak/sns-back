@@ -192,6 +192,12 @@ let postRepo = class postRepo {
             .where('postId is NULL')
             .execute();
     }
+    async likeUp(id) {
+        const { like } = await this.post.findOne(id);
+        return await this.post.update(id, {
+            like: like + 1,
+        });
+    }
 };
 postRepo = __decorate([
     (0, common_1.Injectable)(),

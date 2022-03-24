@@ -17,6 +17,7 @@ export declare class PostService {
         user_id: number;
         nickname: string;
         sentence: string;
+        like: number;
         img_url?: undefined;
     } | {
         id: number;
@@ -25,6 +26,7 @@ export declare class PostService {
         nickname: string;
         img_url: string;
         sentence: string;
+        like: number;
     })[]>;
     read(id: string): Promise<{
         id: number;
@@ -49,4 +51,5 @@ export declare class PostService {
     delete(currentUser: CurrentUser, id: string): Promise<any>;
     deleteComment(currentUser: CurrentUser, id: string): Promise<any>;
     deleteSubComment(currentUser: CurrentUser, id: string): Promise<import("typeorm").DeleteResult>;
+    likeUp(id: string): Promise<import("typeorm").UpdateResult>;
 }

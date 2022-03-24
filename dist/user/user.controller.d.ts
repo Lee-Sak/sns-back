@@ -8,7 +8,9 @@ export declare class UserController {
     readAll(req: any): Promise<import("./entity/user.entity").User[]>;
     readByEmail(email: string): Promise<import("./entity/user.entity").User>;
     follow(id: string, req: any): Promise<object & import("./entity/user.entity").User>;
-    readToken(req: any): Promise<any>;
+    readToken(id: string): Promise<{
+        token: string;
+    }>;
     readFollowing(req: any): Promise<{
         me: {
             id: number;

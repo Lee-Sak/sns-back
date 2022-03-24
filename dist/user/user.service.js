@@ -87,6 +87,21 @@ let UserService = class UserService {
         const payload = {
             id: user.id,
             email: user.email,
+            nick: user.nickname,
+        };
+        return {
+            token: 'bearer ' + (await this.jwtService.sign(payload)),
+        };
+    }
+    async refreshToken(id) {
+        const user = await this.userRepo.readById(id);
+        if (!user) {
+            throw new common_1.HttpException('존재 하지 않는 아이디 입니다.', 401);
+        }
+        const payload = {
+            id: user.id,
+            email: user.email,
+            nick: user.nickname,
         };
         return {
             token: 'bearer ' + (await this.jwtService.sign(payload)),

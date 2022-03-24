@@ -38,6 +38,14 @@ __decorate([
     __metadata("design:type", String)
 ], Post.prototype, "sentence", void 0);
 __decorate([
+    (0, typeorm_1.Column)({
+        type: 'int',
+        nullable: false,
+        default: 0,
+    }),
+    __metadata("design:type", Number)
+], Post.prototype, "like", void 0);
+__decorate([
     (0, typeorm_1.ManyToOne)(() => user_entity_1.User, (user) => user.posts, {
         onDelete: 'CASCADE',
     }),

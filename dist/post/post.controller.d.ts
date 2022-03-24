@@ -10,6 +10,7 @@ export declare class PostController {
         user_id: number;
         nickname: string;
         sentence: string;
+        like: number;
         img_url?: undefined;
     } | {
         id: number;
@@ -18,6 +19,7 @@ export declare class PostController {
         nickname: string;
         img_url: string;
         sentence: string;
+        like: number;
     })[]>;
     read(id: string): Promise<{
         id: number;
@@ -42,4 +44,5 @@ export declare class PostController {
     deleteComment(req: any, id: string): Promise<any>;
     deleteSubComment(req: any, id: string): Promise<import("typeorm").DeleteResult>;
     delete(req: any, id: string): Promise<any>;
+    likeUp(id: string): Promise<import("typeorm").UpdateResult>;
 }

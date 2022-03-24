@@ -34,6 +34,7 @@ let PostService = class PostService {
                     user_id: e.user.id,
                     nickname: e.user.nickname,
                     sentence: e.sentence,
+                    like: e.like,
                 };
             }
             else {
@@ -44,6 +45,7 @@ let PostService = class PostService {
                     nickname: e.user.nickname,
                     img_url: e.images[0].url,
                     sentence: e.sentence,
+                    like: e.like,
                 };
             }
         });
@@ -213,14 +215,16 @@ let PostService = class PostService {
             if (isExist.user.id.toString() === currentUser.id ||
                 currentUser.id === '1') {
                 await this.postRepo.deleteById(id);
-                for (const e of isExist.images) {
-                    const fileName = e.url.split('/')[5];
-                    try {
-                        fs.unlinkSync(`dist/common/uploads/image/${fileName}`);
-                    }
-                    catch (error) {
-                        if (error.code == 'ENOENT') {
-                            console.log(error);
+                if (isExist.images) {
+                    for (const e of isExist.images) {
+                        const fileName = e.url.split('/')[5];
+                        try {
+                            fs.unlinkSync(`dist/common/uploads/image/${fileName}`);
+                        }
+                        catch (error) {
+                            if (error.code == 'ENOENT') {
+                                console.log(error);
+                            }
                         }
                     }
                 }
@@ -252,6 +256,9 @@ let PostService = class PostService {
     }
     async deleteSubComment(currentUser, id) {
         return await this.postRepo.deleteSubComment(id);
+    }
+    async likeUp(id) {
+        return await this.postRepo.likeUp(id);
     }
 };
 PostService = __decorate([

@@ -40,6 +40,9 @@ export declare class UserService {
     login(body: LoginDto): Promise<{
         token: string;
     }>;
+    refreshToken(id: string): Promise<{
+        token: string;
+    }>;
     updatePassword(id: string, body: UpdateUserDto, currentUser: CurrentUser): Promise<import("typeorm").UpdateResult>;
     follow(id: string, currentUser: CurrentUser): Promise<object & User>;
     unfollow(id: string, currentUser: CurrentUser): Promise<object & User>;

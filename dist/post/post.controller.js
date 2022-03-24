@@ -73,6 +73,9 @@ let PostController = class PostController {
     async delete(req, id) {
         return await this.postService.delete(req.user, id);
     }
+    async likeUp(id) {
+        return await this.postService.likeUp(id);
+    }
 };
 __decorate([
     (0, swagger_1.ApiOperation)({ summary: '모든 게시물 가져오기' }),
@@ -206,6 +209,14 @@ __decorate([
     __metadata("design:paramtypes", [Object, String]),
     __metadata("design:returntype", Promise)
 ], PostController.prototype, "delete", null);
+__decorate([
+    (0, common_1.Patch)(':id/like'),
+    (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], PostController.prototype, "likeUp", null);
 PostController = __decorate([
     (0, common_1.Controller)('post'),
     (0, common_1.UseInterceptors)(success_interceptor_1.SuccessInterceptor),

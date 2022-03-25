@@ -30,6 +30,25 @@ export declare class PostService {
         like: any;
         createdAt: any;
     })[]>;
+    readByCol(col: string, val: string): Promise<({
+        id: any;
+        content: any;
+        user_id: any;
+        nickname: any;
+        sentence: any;
+        like: any;
+        createdAt: any;
+        img_url?: undefined;
+    } | {
+        id: any;
+        content: any;
+        user_id: any;
+        nickname: any;
+        img_url: any;
+        sentence: any;
+        like: any;
+        createdAt: any;
+    })[] | "">;
     read(id: string): Promise<{
         id: number;
         content: string;

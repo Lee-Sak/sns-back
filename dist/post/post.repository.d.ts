@@ -13,6 +13,9 @@ export declare class postRepo {
     constructor(post: Repository<Post>, hashtag: Repository<HashTag>, image: Repository<Image>, comment: Repository<Comment>, subComment: Repository<SubComment>);
     joinUser(): Promise<Post[]>;
     readById(id: string): Promise<Post>;
+    readByContent(val: string): Promise<Post[]>;
+    readByIds(ids: number[]): Promise<Post[]>;
+    readByHashTag(val: string): Promise<HashTag>;
     readCommentById(id: string): Promise<Comment>;
     readByImage(id: string): Promise<Image>;
     readHashTagById(id: string): Promise<HashTag>;

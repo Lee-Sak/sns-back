@@ -46,6 +46,53 @@ let postRepo = class postRepo {
     async readById(id) {
         return await this.post.findOne(id);
     }
+    async readByContent(val) {
+        return await this.post.find({
+            join: {
+                alias: 'post',
+                leftJoinAndSelect: {
+                    user: 'post.user',
+                    image: 'post.images',
+                },
+            },
+            where: {
+                content: (0, typeorm_2.Like)(`%${val}%`),
+            },
+            order: {
+                id: 'DESC',
+            },
+        });
+    }
+    async readByIds(ids) {
+        return await this.post.find({
+            join: {
+                alias: 'post',
+                leftJoinAndSelect: {
+                    user: 'post.user',
+                    image: 'post.images',
+                },
+            },
+            where: {
+                id: (0, typeorm_2.In)(ids),
+            },
+            order: {
+                id: 'DESC',
+            },
+        });
+    }
+    async readByHashTag(val) {
+        return await this.hashtag.findOne({
+            join: {
+                alias: 'hashtag',
+                leftJoinAndSelect: {
+                    post: 'hashtag.posts',
+                },
+            },
+            where: {
+                title: val,
+            },
+        });
+    }
     async readCommentById(id) {
         return await this.comment.findOne(id, {
             join: {

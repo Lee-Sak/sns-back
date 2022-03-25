@@ -37,6 +37,9 @@ let PostController = class PostController {
     async readAll() {
         return await this.postService.readAll();
     }
+    async readByCol(col, val) {
+        return await this.postService.readByCol(col, val);
+    }
     async read(id) {
         return await this.postService.read(id);
     }
@@ -91,6 +94,14 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], PostController.prototype, "readAll", null);
+__decorate([
+    (0, common_1.Get)('col'),
+    __param(0, (0, common_1.Query)('col')),
+    __param(1, (0, common_1.Query)('val')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, String]),
+    __metadata("design:returntype", Promise)
+], PostController.prototype, "readByCol", null);
 __decorate([
     (0, swagger_1.ApiOperation)({ summary: '특정 게시물 가져오기' }),
     (0, swagger_1.ApiResponse)({

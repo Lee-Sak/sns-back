@@ -30,6 +30,25 @@ let PostService = class PostService {
         const data = await this.postRepo.joinUser();
         return (0, timeTrans_func_1.timeTransFunc)(data);
     }
+    async readByCol(col, val) {
+        let data;
+        if (col === 'content') {
+            data = await this.postRepo.readByContent(val);
+        }
+        else {
+            const a = await this.postRepo.readByHashTag(val);
+            if (a) {
+                const ids = a.posts.map((e) => {
+                    return e.id;
+                });
+                data = await this.postRepo.readByIds(ids);
+            }
+            else {
+                return '';
+            }
+        }
+        return (0, timeTrans_func_1.timeTransFunc)(data);
+    }
     async read(id) {
         const data = await this.postRepo.joinUserById(id);
         return {

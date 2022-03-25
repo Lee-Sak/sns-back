@@ -76,6 +76,7 @@ let UserService = class UserService {
     }
     async login(body, ip) {
         const { email, password } = body;
+        console.log(ip);
         const user = await this.userRepo.readByEmail(email);
         if (!user) {
             throw new common_1.HttpException('존재 하지 않는 아이디 입니다.', 401);

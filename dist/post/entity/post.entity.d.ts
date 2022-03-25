@@ -7,6 +7,8 @@ export declare class Post {
     content: string;
     sentence: string;
     like: number;
+    createdAt: Date;
+    updatedAt: Date;
     user: User;
     hashtags: HashTag[];
     images: Image[];

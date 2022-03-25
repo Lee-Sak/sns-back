@@ -19,6 +19,8 @@ const post_repository_1 = require("./post.repository");
 const fs = require("fs");
 const comment_entity_1 = require("./entity/comment.entity");
 const sub_comment_entity_1 = require("./entity/sub_comment.entity");
+const current_user_dto_1 = require("../user/dto/current.user.dto");
+const timeTrans_func_1 = require("../common/transformer/timeTrans.func");
 let PostService = class PostService {
     constructor(postRepo, userRepo) {
         this.postRepo = postRepo;
@@ -26,29 +28,7 @@ let PostService = class PostService {
     }
     async readAll() {
         const data = await this.postRepo.joinUser();
-        return data.map((e) => {
-            if (Array.isArray(e.images) && e.images.length === 0) {
-                return {
-                    id: e.id,
-                    content: e.content,
-                    user_id: e.user.id,
-                    nickname: e.user.nickname,
-                    sentence: e.sentence,
-                    like: e.like,
-                };
-            }
-            else {
-                return {
-                    id: e.id,
-                    content: e.content,
-                    user_id: e.user.id,
-                    nickname: e.user.nickname,
-                    img_url: e.images[0].url,
-                    sentence: e.sentence,
-                    like: e.like,
-                };
-            }
-        });
+        return (0, timeTrans_func_1.timeTransFunc)(data);
     }
     async read(id) {
         const data = await this.postRepo.joinUserById(id);

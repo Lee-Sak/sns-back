@@ -46,6 +46,20 @@ __decorate([
     __metadata("design:type", Number)
 ], Post.prototype, "like", void 0);
 __decorate([
+    (0, typeorm_1.CreateDateColumn)({
+        type: 'timestamp',
+        default: () => 'CURRENT_TIMESTAMP(6)',
+    }),
+    __metadata("design:type", Date)
+], Post.prototype, "createdAt", void 0);
+__decorate([
+    (0, typeorm_1.UpdateDateColumn)({
+        type: 'timestamp',
+        default: () => 'CURRENT_TIMESTAMP(6)',
+    }),
+    __metadata("design:type", Date)
+], Post.prototype, "updatedAt", void 0);
+__decorate([
     (0, typeorm_1.ManyToOne)(() => user_entity_1.User, (user) => user.posts, {
         onDelete: 'CASCADE',
     }),

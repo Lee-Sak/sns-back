@@ -7,6 +7,8 @@ export declare class User {
     password: string;
     nickname: string;
     isActive: boolean;
+    createdAt: Date;
+    updatedAt: Date;
     posts: Post[];
     comments: Comment[];
     sub_comments: SubComment[];

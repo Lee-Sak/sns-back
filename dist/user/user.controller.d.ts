@@ -37,7 +37,7 @@ export declare class UserController {
         nickname: string;
     }>;
     create(body: CreateUserDto): Promise<any>;
-    login(body: LoginDto): Promise<{
+    login(body: LoginDto, ip: string): Promise<{
         token: string;
     }>;
     unfollow(id: string, req: any): Promise<object & import("./entity/user.entity").User>;

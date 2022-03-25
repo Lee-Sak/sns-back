@@ -20,7 +20,11 @@ const hashtag_entity_1 = require("./post/entity/hashtag.entity");
 const image_entity_1 = require("./post/entity/image.entity");
 const comment_entity_1 = require("./post/entity/comment.entity");
 const sub_comment_entity_1 = require("./post/entity/sub_comment.entity");
+const logger_middleware_1 = require("./common/middleware/logger.middleware");
 let AppModule = class AppModule {
+    configure(consumer) {
+        consumer.apply(logger_middleware_1.LoggerMiddleware).forRoutes('*');
+    }
 };
 AppModule = __decorate([
     (0, common_1.Module)({
@@ -36,6 +40,7 @@ AppModule = __decorate([
                 entities: [user_entity_1.User, post_entity_1.Post, hashtag_entity_1.HashTag, image_entity_1.Image, comment_entity_1.Comment, sub_comment_entity_1.SubComment],
                 synchronize: true,
                 logging: true,
+                timezone: 'GMT',
             }),
             user_module_1.UserModule,
             post_module_1.PostModule,

@@ -53,6 +53,20 @@ __decorate([
     __metadata("design:type", Boolean)
 ], User.prototype, "isActive", void 0);
 __decorate([
+    (0, typeorm_1.CreateDateColumn)({
+        type: 'timestamp',
+        default: () => 'CURRENT_TIMESTAMP(6)',
+    }),
+    __metadata("design:type", Date)
+], User.prototype, "createdAt", void 0);
+__decorate([
+    (0, typeorm_1.UpdateDateColumn)({
+        type: 'timestamp',
+        default: () => 'CURRENT_TIMESTAMP(6)',
+    }),
+    __metadata("design:type", Date)
+], User.prototype, "updatedAt", void 0);
+__decorate([
     (0, typeorm_1.OneToMany)(() => post_entity_1.Post, (post) => post.user, {}),
     __metadata("design:type", Array)
 ], User.prototype, "posts", void 0);

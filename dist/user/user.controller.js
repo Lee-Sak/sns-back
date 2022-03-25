@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserController = void 0;
 const common_1 = require("@nestjs/common");
 const swagger_1 = require("@nestjs/swagger");
+const currentIp_deco_1 = require("../common/decorator/currentIp.deco");
 const create_dto_1 = require("../common/dto/create.dto");
 const delete_dto_1 = require("../common/dto/delete.dto");
 const update_dto_1 = require("../common/dto/update.dto");
@@ -57,8 +58,9 @@ let UserController = class UserController {
     async create(body) {
         return await this.userService.create(body);
     }
-    async login(body) {
-        return await this.userService.login(body);
+    async login(body, ip) {
+        console.log(ip);
+        return await this.userService.login(body, ip);
     }
     async unfollow(id, req) {
         return await this.userService.unfollow(id, req.user);
@@ -187,8 +189,9 @@ __decorate([
     }),
     (0, common_1.Post)('login'),
     __param(0, (0, common_1.Body)()),
+    __param(1, (0, currentIp_deco_1.CurrentIp)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [login_dto_1.LoginDto]),
+    __metadata("design:paramtypes", [login_dto_1.LoginDto, String]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "login", null);
 __decorate([

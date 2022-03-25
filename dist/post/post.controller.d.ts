@@ -5,21 +5,23 @@ export declare class PostController {
     private readonly postService;
     constructor(postService: PostService);
     readAll(): Promise<({
-        id: number;
-        content: string;
-        user_id: number;
-        nickname: string;
-        sentence: string;
-        like: number;
+        id: any;
+        content: any;
+        user_id: any;
+        nickname: any;
+        sentence: any;
+        like: any;
+        createdAt: any;
         img_url?: undefined;
     } | {
-        id: number;
-        content: string;
-        user_id: number;
-        nickname: string;
-        img_url: string;
-        sentence: string;
-        like: number;
+        id: any;
+        content: any;
+        user_id: any;
+        nickname: any;
+        img_url: any;
+        sentence: any;
+        like: any;
+        createdAt: any;
     })[]>;
     read(id: string): Promise<{
         id: number;

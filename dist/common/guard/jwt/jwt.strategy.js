@@ -28,7 +28,9 @@ let JwtStrategy = class JwtStrategy extends (0, passport_1.PassportStrategy)(pas
         if (user) {
             return {
                 id: user.id.toString(),
-                nickname: user.nickname,
+                ip: payload.ip,
+                nick: user.nickname,
+                email: user.email,
             };
         }
         else {

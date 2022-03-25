@@ -74,7 +74,7 @@ let UserService = class UserService {
         }
         return null;
     }
-    async login(body) {
+    async login(body, ip) {
         const { email, password } = body;
         const user = await this.userRepo.readByEmail(email);
         if (!user) {
@@ -86,6 +86,7 @@ let UserService = class UserService {
         }
         const payload = {
             id: user.id,
+            ip,
             email: user.email,
             nick: user.nickname,
         };

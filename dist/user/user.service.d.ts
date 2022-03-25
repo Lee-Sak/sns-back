@@ -37,7 +37,7 @@ export declare class UserService {
         }[];
     }>;
     create(body: CreateUserDto): Promise<any>;
-    login(body: LoginDto): Promise<{
+    login(body: LoginDto, ip: string): Promise<{
         token: string;
     }>;
     refreshToken(id: string): Promise<{
